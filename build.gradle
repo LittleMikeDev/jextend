@@ -1,31 +1,35 @@
 plugins {
-    id "uk.co.littlemike.publishing-smorgasbord-plugin" version "0.10"
-    id "java"
-    id "jacoco"
+    id "uk.co.littlemike.publishing-smorgasbord-plugin" version "0.10" apply false
 }
 
-defaultTasks 'build', 'jacocoTestReport', 'publishToMavenLocal'
+defaultTasks 'build', 'jacocoTestReport'
 
-version = '0.1-SNAPSHOT'
-sourceCompatibility = 1.8
+subprojects {
+    apply plugin: 'uk.co.littlemike.publishing-smorgasbord-plugin'
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
 
-basicPublishing {
-    // Your organisation identifier (required)
-    organisation = 'com.foo'
-}
+    version = '0.1-SNAPSHOT'
+    sourceCompatibility = 1.8
 
-repositories {
-    jcenter()
-}
+    basicPublishing {
+        organisation = 'uk.co.littlemike'
+    }
 
-dependencies {
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.assertj:assertj-core:3.8.0'
-    testCompile 'org.mockito:mockito-core:2.10.0'
-}
+    repositories {
+        jcenter()
+        mavenLocal()
+    }
 
-jacocoTestReport {
-    reports {
-        xml.enabled true
+    dependencies {
+        testCompile 'junit:junit:4.12'
+        testCompile 'org.assertj:assertj-core:3.8.0'
+        testCompile 'org.mockito:mockito-core:2.10.0'
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+        }
     }
 }
