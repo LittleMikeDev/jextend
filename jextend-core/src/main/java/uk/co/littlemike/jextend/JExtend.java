@@ -10,6 +10,9 @@ public class JExtend {
     }
 
     public static <E> E extend(Object object, Class<E> extensionInterface) {
+        if (extender == null) {
+            throw new NoImplementationOnClasspathException(object.getClass(), extensionInterface);
+        }
         return extender.extend(object, extensionInterface);
     }
 }
