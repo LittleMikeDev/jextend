@@ -1,6 +1,4 @@
-package uk.co.littlemike.jextend.impl;
-
-import uk.co.littlemike.jextend.Extension;
+package uk.co.littlemike.jextend;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;

@@ -1,6 +1,7 @@
 package uk.co.littlemike.jextend.impl;
 
 import uk.co.littlemike.jextend.Extension;
+import uk.co.littlemike.jextend.TestExtension;
 
 public class TestExtender implements Extender {
 
