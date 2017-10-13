@@ -12,11 +12,10 @@ public class JExtend {
         JExtend.extender = extender;
     }
 
-    @SuppressWarnings("unchecked")
-    public static <C, E> E extend(C object, Class<E> extensionInterface) {
+    public static <C, E> Extension<C, E> getExtension(Class<C> baseClass, Class<E> extensionInterface) {
         if (extender == null) {
-            throw new NoImplementationOnClasspathException(object.getClass(), extensionInterface);
+            throw new NoImplementationOnClasspathException(baseClass, extensionInterface);
         }
-        return extender.getExtension((Class<C>) object.getClass(), extensionInterface).extend(object);
+        return extender.getExtension(baseClass, extensionInterface);
     }
 }

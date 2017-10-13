@@ -5,17 +5,18 @@ import org.junit.Before;
 import org.junit.Test;
 import uk.co.littlemike.jextend.impl.Extender;
 import uk.co.littlemike.jextend.impl.NoImplementationOnClasspathException;
-import uk.co.littlemike.jextend.impl.TestExtender;
 
 import java.io.Serializable;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.co.littlemike.jextend.JExtend.extend;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static uk.co.littlemike.jextend.JExtend.setExtender;
 
 public class JExtendTest {
 
-    Extender extender = new TestExtender();
+    Extender extender = mock(Extender.class);
 
     @Before
     public void overrideExtender() {
@@ -29,17 +30,18 @@ public class JExtendTest {
 
     @Test
     public void returnsExtendedObject() {
-        Object object = new Object();
+        TestExtension<List, Serializable> extension = new TestExtension<>(Serializable.class);
+        when(extender.getExtension(List.class, Serializable.class)).thenReturn(extension);
 
-        Serializable returnedObject = extend(object, Serializable.class);
+        Extension<List, Serializable> returnedExtension = JExtend.getExtension(List.class, Serializable.class);
 
-        assertThat(returnedObject).isInstanceOf(Serializable.class);
+        assertThat(returnedExtension).isSameAs(extension);
     }
 
     @Test(expected = NoImplementationOnClasspathException.class)
     public void throwsExceptionIfNoImplementationAvailableOnClasspath() {
         setExtender(null);
 
-        extend(new Object(), Serializable.class);
+        JExtend.getExtension(List.class, Serializable.class);
     }
 }
