@@ -1,4 +1,4 @@
-package uk.co.littlemike.jextend;
+package uk.co.littlemike.jextend.impl;
 
 public class NoImplementationOnClasspathException extends RuntimeException {
     public NoImplementationOnClasspathException(Class<?> objectClass, Class<?> extensionInterface) {

@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import uk.co.littlemike.jextend.impl.Extender;
+import uk.co.littlemike.jextend.impl.NoImplementationOnClasspathException;
 import uk.co.littlemike.jextend.impl.TestExtender;
 
 import java.io.Serializable;

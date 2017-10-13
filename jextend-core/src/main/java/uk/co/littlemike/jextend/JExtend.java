@@ -1,6 +1,7 @@
 package uk.co.littlemike.jextend;
 
 import uk.co.littlemike.jextend.impl.Extender;
+import uk.co.littlemike.jextend.impl.NoImplementationOnClasspathException;
 
 public class JExtend {
 
