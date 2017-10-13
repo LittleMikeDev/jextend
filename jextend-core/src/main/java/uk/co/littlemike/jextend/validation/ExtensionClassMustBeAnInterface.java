@@ -1,11 +1,9 @@
 package uk.co.littlemike.jextend.validation;
 
-public class ExtensionClassMustBeAnInterface extends RuntimeException {
+import uk.co.littlemike.jextend.JExtendException;
+
+public class ExtensionClassMustBeAnInterface extends JExtendException {
     public ExtensionClassMustBeAnInterface(Class<?> baseClass, Class<?> extensionInterface) {
-        super(String.format(
-                "Unable to extend base class %s with extension %s, the extension must be an interface.",
-                baseClass.getName(),
-                extensionInterface.getName()
-        ));
+        super(baseClass, extensionInterface, "The extension must be an interface.");
     }
 }
