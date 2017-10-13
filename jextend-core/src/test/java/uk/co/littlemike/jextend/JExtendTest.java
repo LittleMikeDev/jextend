@@ -6,7 +6,6 @@ import org.junit.Test;
 import uk.co.littlemike.jextend.impl.Extender;
 import uk.co.littlemike.jextend.impl.NoImplementationOnClasspathException;
 
-import java.io.Serializable;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,10 +29,10 @@ public class JExtendTest {
 
     @Test
     public void returnsExtendedObject() {
-        TestExtension<List, Serializable> extension = new TestExtension<>(Serializable.class);
-        when(extender.getExtension(List.class, Serializable.class)).thenReturn(extension);
+        TestExtension<List, ListExtension> extension = new TestExtension<>(ListExtension.class);
+        when(extender.getExtension(List.class, ListExtension.class)).thenReturn(extension);
 
-        Extension<List, Serializable> returnedExtension = JExtend.getExtension(List.class, Serializable.class);
+        Extension<List, ListExtension> returnedExtension = JExtend.getExtension(List.class, ListExtension.class);
 
         assertThat(returnedExtension).isSameAs(extension);
     }
@@ -42,6 +41,6 @@ public class JExtendTest {
     public void throwsExceptionIfNoImplementationAvailableOnClasspath() {
         setExtender(null);
 
-        JExtend.getExtension(List.class, Serializable.class);
+        JExtend.getExtension(List.class, ListExtension.class);
     }
 }

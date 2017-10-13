@@ -12,7 +12,7 @@ public class JExtend {
         JExtend.extender = extender;
     }
 
-    public static <C, E> Extension<C, E> getExtension(Class<C> baseClass, Class<E> extensionInterface) {
+    public static <C, E extends C> Extension<C, E> getExtension(Class<C> baseClass, Class<E> extensionInterface) {
         if (extender == null) {
             throw new NoImplementationOnClasspathException(baseClass, extensionInterface);
         }

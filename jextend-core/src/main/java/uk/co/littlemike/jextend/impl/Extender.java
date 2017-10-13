@@ -4,5 +4,5 @@ import uk.co.littlemike.jextend.Extension;
 
 public interface Extender {
 
-    <C, E> Extension<C, E> getExtension(Class<C> baseClass, Class<E> extensionInterface);
+    <C, E extends C> Extension<C, E> getExtension(Class<C> baseClass, Class<E> extensionInterface);
 }
