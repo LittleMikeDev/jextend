@@ -3,22 +3,18 @@ package uk.co.littlemike.jextend;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import uk.co.littlemike.jextend.impl.Extender;
+import uk.co.littlemike.jextend.impl.TestExtender;
 
 import java.io.Serializable;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 import static uk.co.littlemike.jextend.JExtend.extend;
 import static uk.co.littlemike.jextend.JExtend.setExtender;
 
-@RunWith(MockitoJUnitRunner.class)
 public class JExtendTest {
 
-    @Mock
-    Extender extender;
+    Extender extender = new TestExtender();
 
     @Before
     public void overrideExtender() {
@@ -33,13 +29,10 @@ public class JExtendTest {
     @Test
     public void returnsExtendedObject() {
         Object object = new Object();
-        Serializable extendedObject = new Serializable() {
-        };
-        when(extender.extend(object, Serializable.class)).thenReturn(extendedObject);
 
         Serializable returnedObject = extend(object, Serializable.class);
 
-        assertThat(returnedObject).isSameAs(extendedObject);
+        assertThat(returnedObject).isInstanceOf(Serializable.class);
     }
 
     @Test(expected = NoImplementationOnClasspathException.class)

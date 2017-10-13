@@ -1,5 +1,7 @@
 package uk.co.littlemike.jextend;
 
+import uk.co.littlemike.jextend.impl.Extender;
+
 public class JExtend {
 
     private static Extender extender;
@@ -9,10 +11,11 @@ public class JExtend {
         JExtend.extender = extender;
     }
 
-    public static <E> E extend(Object object, Class<E> extensionInterface) {
+    @SuppressWarnings("unchecked")
+    public static <C, E> E extend(C object, Class<E> extensionInterface) {
         if (extender == null) {
             throw new NoImplementationOnClasspathException(object.getClass(), extensionInterface);
         }
-        return extender.extend(object, extensionInterface);
+        return extender.getExtension((Class<C>) object.getClass(), extensionInterface).extend(object);
     }
 }
