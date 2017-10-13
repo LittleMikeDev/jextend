@@ -6,6 +6,8 @@ import uk.co.littlemike.jextend.validation.ExtensionClassMustBeAnInterface;
 
 public class JExtend {
 
+    private JExtend() {}
+
     private static Extender extender;
 
     @VisibleForTesting
