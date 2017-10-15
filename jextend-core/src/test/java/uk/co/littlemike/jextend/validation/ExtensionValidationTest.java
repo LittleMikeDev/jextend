@@ -38,4 +38,18 @@ public class ExtensionValidationTest extends BaseJExtendTest {
 
         JExtend.getExtension(List.class, UnimplementedMethod.class);
     }
+
+    interface UnimplementedSubInterface extends UnimplementedMethod {
+        default void doStuff3() {}
+    }
+
+    @Test
+    public void throwsExceptionIfExtensionSuperInterfaceHasANonDefaultMethod() {
+        exception.expect(UnimplementedExtensionMethodException.class);
+        exception.expectMessage("List");
+        exception.expectMessage("UnimplementedSubInterface");
+        exception.expectMessage("UnimplementedMethod");
+
+        JExtend.getExtension(List.class, UnimplementedSubInterface.class);
+    }
 }

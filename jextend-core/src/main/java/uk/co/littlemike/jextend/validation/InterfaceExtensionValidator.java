@@ -20,11 +20,16 @@ public class InterfaceExtensionValidator {
             throw new ExtensionClassNotAnInterfaceException(baseClass, extensionInterface);
         }
 
-        List<Method> unimplementedMethods = Arrays.stream(extensionInterface.getDeclaredMethods())
+        List<Method> unimplementedMethods = Arrays.stream(extensionInterface.getMethods())
+                .filter(m -> !isInBaseClass(m))
                 .filter(m -> !m.isDefault())
                 .collect(toList());
         if (!unimplementedMethods.isEmpty()) {
             throw new UnimplementedExtensionMethodException(baseClass, extensionInterface, unimplementedMethods);
         }
+    }
+
+    private boolean isInBaseClass(Method m) {
+        return m.getDeclaringClass().isAssignableFrom(baseClass);
     }
 }
