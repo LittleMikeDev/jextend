@@ -2,14 +2,7 @@ package uk.co.littlemike.jextend;
 
 import uk.co.littlemike.jextend.impl.Extender;
 import uk.co.littlemike.jextend.impl.NoImplementationOnClasspathException;
-import uk.co.littlemike.jextend.validation.ExtensionClassNotAnInterfaceException;
-import uk.co.littlemike.jextend.validation.UnimplementedExtensionMethodException;
-
-import java.lang.reflect.Method;
-import java.util.List;
-
-import static java.util.Arrays.stream;
-import static java.util.stream.Collectors.toList;
+import uk.co.littlemike.jextend.validation.InterfaceExtensionValidator;
 
 public class JExtend {
 
@@ -27,17 +20,10 @@ public class JExtend {
         if (extender == null) {
             throw new NoImplementationOnClasspathException(baseClass, extensionInterface);
         }
-        if (!extensionInterface.isInterface()) {
-            throw new ExtensionClassNotAnInterfaceException(baseClass, extensionInterface);
-        }
 
-        List<Method> unimplementedMethods = stream(extensionInterface.getDeclaredMethods())
-                .filter(m -> !m.isDefault())
-                .collect(toList());
-        if (!unimplementedMethods.isEmpty()) {
-            throw new UnimplementedExtensionMethodException(baseClass, extensionInterface, unimplementedMethods);
-        }
+        new InterfaceExtensionValidator(baseClass, extensionInterface).enforceValidation();
 
         return extender.getExtension(baseClass, extensionInterface);
     }
+
 }
