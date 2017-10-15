@@ -52,4 +52,13 @@ public class ExtensionValidationTest extends BaseJExtendTest {
 
         JExtend.getExtension(List.class, UnimplementedSubInterface.class);
     }
+
+    interface FullyImplemented extends List {
+        default void doStuff() {}
+    }
+
+    @Test
+    public void doesNotThrowExceptionIfExtensionIsFullyImplemented() {
+        JExtend.getExtension(List.class, FullyImplemented.class);
+    }
 }
