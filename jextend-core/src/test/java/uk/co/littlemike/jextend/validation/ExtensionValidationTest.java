@@ -16,7 +16,7 @@ public class ExtensionValidationTest extends BaseJExtendTest {
 
     @Test
     public void throwsExceptionWhenExtensionIsNotAnInterface() {
-        exception.expect(ExtensionClassMustBeAnInterface.class);
+        exception.expect(ExtensionClassNotAnInterfaceException.class);
         exception.expectMessage("Object");
         exception.expectMessage("ArrayList");
 

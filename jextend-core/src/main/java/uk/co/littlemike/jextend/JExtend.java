@@ -2,7 +2,7 @@ package uk.co.littlemike.jextend;
 
 import uk.co.littlemike.jextend.impl.Extender;
 import uk.co.littlemike.jextend.impl.NoImplementationOnClasspathException;
-import uk.co.littlemike.jextend.validation.ExtensionClassMustBeAnInterface;
+import uk.co.littlemike.jextend.validation.ExtensionClassNotAnInterfaceException;
 import uk.co.littlemike.jextend.validation.UnimplementedExtensionMethodException;
 
 import java.lang.reflect.Method;
@@ -28,7 +28,7 @@ public class JExtend {
             throw new NoImplementationOnClasspathException(baseClass, extensionInterface);
         }
         if (!extensionInterface.isInterface()) {
-            throw new ExtensionClassMustBeAnInterface(baseClass, extensionInterface);
+            throw new ExtensionClassNotAnInterfaceException(baseClass, extensionInterface);
         }
 
         List<Method> unimplementedMethods = stream(extensionInterface.getDeclaredMethods())
