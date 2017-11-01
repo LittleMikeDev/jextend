@@ -3,7 +3,9 @@ package uk.co.littlemike.jextend;
 import uk.co.littlemike.jextend.impl.ExtensionConfiguration;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.Set;
 
 public class TestExtension<C, E extends C> implements Extension<C, E> {
     private static final InvocationHandler noOpInvocationHandler = (proxy, method, args) -> null;
@@ -30,5 +32,9 @@ public class TestExtension<C, E extends C> implements Extension<C, E> {
 
     public Class<E> getExtensionInterface() {
         return configuration.getExtensionInterface();
+    }
+
+    public Set<Method> getDelegateMethods() {
+        return configuration.getDelegateMethods();
     }
 }
