@@ -11,10 +11,11 @@ import static uk.co.littlemike.jextend.JExtend.setExtender;
 public class JExtendTest extends BaseJExtendTest {
 
     @Test
-    public void returnsExtendedObject() {
+    public void returnsExtensionForBaseClassAndExtensionInterface() {
         TestExtension<List, ListExtension> returnedExtension = getExtension(List.class, ListExtension.class);
 
-        assertThat(returnedExtension).isInstanceOf(TestExtension.class);
+        assertThat(returnedExtension.getBaseClass()).isEqualTo(List.class);
+        assertThat(returnedExtension.getExtensionInterface()).isEqualTo(ListExtension.class);
     }
 
     @Test(expected = NoImplementationOnClasspathException.class)

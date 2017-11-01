@@ -5,10 +5,13 @@ import java.lang.reflect.Proxy;
 
 public class TestExtension<C, E> implements Extension<C, E> {
     private static final InvocationHandler noOpInvocationHandler = (proxy, method, args) -> null;
-    private final Class<E> extensionClass;
 
-    public TestExtension(Class<E> extensionClass) {
-        this.extensionClass = extensionClass;
+    private final Class<C> baseClass;
+    private final Class<E> extensionInterface;
+
+    public TestExtension(Class<C> baseClass, Class<E> extensionInterface) {
+        this.baseClass = baseClass;
+        this.extensionInterface = extensionInterface;
     }
 
     @SuppressWarnings("unchecked")
@@ -16,8 +19,16 @@ public class TestExtension<C, E> implements Extension<C, E> {
     public E extend(C object) {
         return (E) Proxy.newProxyInstance(
                 TestExtension.class.getClassLoader(),
-                new Class[] { extensionClass },
+                new Class[] {extensionInterface},
                 noOpInvocationHandler
         );
+    }
+
+    public Class<C> getBaseClass() {
+        return baseClass;
+    }
+
+    public Class<E> getExtensionInterface() {
+        return extensionInterface;
     }
 }
