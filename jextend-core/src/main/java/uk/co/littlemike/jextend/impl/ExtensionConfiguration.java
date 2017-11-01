@@ -16,6 +16,7 @@ public class ExtensionConfiguration<C, E extends C> {
     public ExtensionConfiguration(Class<C> baseClass, Class<E> extensionInterface) {
         this.baseClass = baseClass;
         this.extensionInterface = extensionInterface;
+        validate();
     }
 
     public Class<C> getBaseClass() {
@@ -26,7 +27,7 @@ public class ExtensionConfiguration<C, E extends C> {
         return extensionInterface;
     }
 
-    public void validate() {
+    private void validate() {
         if (!extensionInterface.isInterface()) {
             throw new ExtensionClassNotAnInterfaceException(baseClass, extensionInterface);
         }

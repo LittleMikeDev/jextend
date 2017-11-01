@@ -21,9 +21,7 @@ public class JExtend {
             throw new NoImplementationOnClasspathException(baseClass, extensionInterface);
         }
 
-        ExtensionConfiguration<C, E> configuration = new ExtensionConfiguration<>(baseClass, extensionInterface);
-        configuration.validate();
-        return extender.getExtension(configuration);
+        return extender.getExtension(new ExtensionConfiguration<>(baseClass, extensionInterface));
     }
 
 }
