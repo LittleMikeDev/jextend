@@ -4,18 +4,15 @@ import uk.co.littlemike.jextend.validation.ExtensionClassNotAnInterfaceException
 import uk.co.littlemike.jextend.validation.UnimplementedExtensionMethodException;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-
-import static java.util.stream.Collectors.toList;
 
 public class ExtensionConfiguration<C, E extends C> {
     private final Class<C> baseClass;
     private final Class<E> extensionInterface;
     private Set<Method> delegateMethods = new HashSet<>();
     private Set<Method> defaultMethods = new HashSet<>();
+    private Set<Method> unimplementedMethods = new HashSet<>();
 
     public ExtensionConfiguration(Class<C> baseClass, Class<E> extensionInterface) {
         this.baseClass = baseClass;
@@ -29,8 +26,23 @@ public class ExtensionConfiguration<C, E extends C> {
     private void categorizeMethod(Method method) {
         if (isInBaseClass(method)) {
             delegateMethods.add(method);
-        } else {
+        } else if (method.isDefault()) {
             defaultMethods.add(method);
+        } else {
+            unimplementedMethods.add(method);
+        }
+    }
+
+    private boolean isInBaseClass(Method m) {
+        return m.getDeclaringClass().isAssignableFrom(baseClass);
+    }
+
+    private void validate() {
+        if (!extensionInterface.isInterface()) {
+            throw new ExtensionClassNotAnInterfaceException(baseClass, extensionInterface);
+        }
+        if (!unimplementedMethods.isEmpty()) {
+            throw new UnimplementedExtensionMethodException(baseClass, extensionInterface, unimplementedMethods);
         }
     }
 
@@ -40,24 +52,6 @@ public class ExtensionConfiguration<C, E extends C> {
 
     public Class<E> getExtensionInterface() {
         return extensionInterface;
-    }
-
-    private void validate() {
-        if (!extensionInterface.isInterface()) {
-            throw new ExtensionClassNotAnInterfaceException(baseClass, extensionInterface);
-        }
-
-        List<Method> unimplementedMethods = Arrays.stream(extensionInterface.getMethods())
-                .filter(m -> !isInBaseClass(m))
-                .filter(m -> !m.isDefault())
-                .collect(toList());
-        if (!unimplementedMethods.isEmpty()) {
-            throw new UnimplementedExtensionMethodException(baseClass, extensionInterface, unimplementedMethods);
-        }
-    }
-
-    private boolean isInBaseClass(Method m) {
-        return m.getDeclaringClass().isAssignableFrom(baseClass);
     }
 
     public Set<Method> getDelegateMethods() {
