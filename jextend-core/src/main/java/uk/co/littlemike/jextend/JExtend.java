@@ -1,6 +1,7 @@
 package uk.co.littlemike.jextend;
 
 import uk.co.littlemike.jextend.impl.Extender;
+import uk.co.littlemike.jextend.impl.ExtensionConfiguration;
 import uk.co.littlemike.jextend.impl.NoImplementationOnClasspathException;
 import uk.co.littlemike.jextend.validation.InterfaceExtensionValidator;
 
@@ -21,9 +22,10 @@ public class JExtend {
             throw new NoImplementationOnClasspathException(baseClass, extensionInterface);
         }
 
-        new InterfaceExtensionValidator(baseClass, extensionInterface).enforceValidation();
+        ExtensionConfiguration<C, E> configuration = new ExtensionConfiguration<>(baseClass, extensionInterface);
+        new InterfaceExtensionValidator<>(configuration).enforceValidation();
 
-        return extender.getExtension(baseClass, extensionInterface);
+        return extender.getExtension(configuration);
     }
 
 }

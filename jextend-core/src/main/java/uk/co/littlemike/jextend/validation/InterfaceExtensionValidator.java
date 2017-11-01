@@ -1,18 +1,20 @@
 package uk.co.littlemike.jextend.validation;
 
+import uk.co.littlemike.jextend.impl.ExtensionConfiguration;
+
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-public class InterfaceExtensionValidator {
+public class InterfaceExtensionValidator<C, E extends C> {
     private final Class<?> baseClass;
     private final Class<?> extensionInterface;
 
-    public InterfaceExtensionValidator(Class<?> baseClass, Class<?> extensionInterface) {
-        this.baseClass = baseClass;
-        this.extensionInterface = extensionInterface;
+    public InterfaceExtensionValidator(ExtensionConfiguration<C, E> extensionConfiguration) {
+        this.baseClass = extensionConfiguration.getBaseClass();
+        this.extensionInterface = extensionConfiguration.getExtensionInterface();
     }
 
     public void enforceValidation() {
