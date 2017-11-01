@@ -19,4 +19,8 @@ public class BaseJExtendTest {
     public void autodetectExtender() {
         setExtender(null);
     }
+
+    protected <C, E extends C> TestExtension<C, E> getExtension(Class<C> baseClass, Class<E> extensionInterface) {
+        return (TestExtension<C, E>) JExtend.getExtension(baseClass, extensionInterface);
+    }
 }

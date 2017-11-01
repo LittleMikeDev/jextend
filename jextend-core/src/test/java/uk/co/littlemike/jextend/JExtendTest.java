@@ -12,7 +12,7 @@ public class JExtendTest extends BaseJExtendTest {
 
     @Test
     public void returnsExtendedObject() {
-        Extension<List, ListExtension> returnedExtension = JExtend.getExtension(List.class, ListExtension.class);
+        TestExtension<List, ListExtension> returnedExtension = getExtension(List.class, ListExtension.class);
 
         assertThat(returnedExtension).isInstanceOf(TestExtension.class);
     }
@@ -21,6 +21,6 @@ public class JExtendTest extends BaseJExtendTest {
     public void throwsExceptionIfNoImplementationAvailableOnClasspath() {
         setExtender(null);
 
-        JExtend.getExtension(List.class, ListExtension.class);
+        getExtension(List.class, ListExtension.class);
     }
 }

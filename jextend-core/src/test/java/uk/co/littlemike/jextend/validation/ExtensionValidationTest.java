@@ -4,7 +4,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import uk.co.littlemike.jextend.BaseJExtendTest;
-import uk.co.littlemike.jextend.JExtend;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,7 @@ public class ExtensionValidationTest extends BaseJExtendTest {
         exception.expectMessage("Object");
         exception.expectMessage("ArrayList");
 
-        JExtend.getExtension(Object.class, ArrayList.class);
+        getExtension(Object.class, ArrayList.class);
     }
 
     interface UnimplementedMethod extends List {
@@ -36,7 +35,7 @@ public class ExtensionValidationTest extends BaseJExtendTest {
         exception.expectMessage("doStuff()");
         exception.expectMessage("doStuff2(int)");
 
-        JExtend.getExtension(List.class, UnimplementedMethod.class);
+        getExtension(List.class, UnimplementedMethod.class);
     }
 
     interface UnimplementedSubInterface extends UnimplementedMethod {
@@ -50,7 +49,7 @@ public class ExtensionValidationTest extends BaseJExtendTest {
         exception.expectMessage("UnimplementedSubInterface");
         exception.expectMessage("UnimplementedMethod");
 
-        JExtend.getExtension(List.class, UnimplementedSubInterface.class);
+        getExtension(List.class, UnimplementedSubInterface.class);
     }
 
     interface FullyImplemented extends List {
@@ -59,6 +58,6 @@ public class ExtensionValidationTest extends BaseJExtendTest {
 
     @Test
     public void doesNotThrowExceptionIfExtensionIsFullyImplemented() {
-        JExtend.getExtension(List.class, FullyImplemented.class);
+        getExtension(List.class, FullyImplemented.class);
     }
 }
