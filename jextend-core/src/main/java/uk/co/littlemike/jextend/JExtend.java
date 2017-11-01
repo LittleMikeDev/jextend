@@ -3,7 +3,6 @@ package uk.co.littlemike.jextend;
 import uk.co.littlemike.jextend.impl.Extender;
 import uk.co.littlemike.jextend.impl.ExtensionConfiguration;
 import uk.co.littlemike.jextend.impl.NoImplementationOnClasspathException;
-import uk.co.littlemike.jextend.validation.InterfaceExtensionValidator;
 
 public class JExtend {
 
@@ -23,8 +22,7 @@ public class JExtend {
         }
 
         ExtensionConfiguration<C, E> configuration = new ExtensionConfiguration<>(baseClass, extensionInterface);
-        new InterfaceExtensionValidator<>(configuration).enforceValidation();
-
+        configuration.validate();
         return extender.getExtension(configuration);
     }
 
