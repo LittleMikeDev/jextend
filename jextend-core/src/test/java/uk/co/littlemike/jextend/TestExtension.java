@@ -37,4 +37,8 @@ public class TestExtension<C, E extends C> implements Extension<C, E> {
     public Set<Method> getDelegateMethods() {
         return configuration.getDelegateMethods();
     }
+
+    public Set<Method> getDefaultMethods() {
+        return configuration.getDefaultMethods();
+    }
 }

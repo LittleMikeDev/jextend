@@ -33,6 +33,18 @@ public class JExtendTest extends BaseJExtendTest {
         );
     }
 
+    @Test
+    public void listsDefaultMethodsInConfiguration() throws Exception {
+        returnedExtension = getExtension(List.class, ListExtension.class);
+
+        assertThat(returnedExtension.getDefaultMethods()).contains(
+                ListExtension.class.getMethod("isNotEmpty")
+        );
+        assertThat(returnedExtension.getDefaultMethods()).doesNotContain(
+                List.class.getMethod("isEmpty")
+        );
+    }
+
     @Test(expected = NoImplementationOnClasspathException.class)
     public void throwsExceptionIfNoImplementationAvailableOnClasspath() {
         setExtender(null);

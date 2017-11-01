@@ -15,6 +15,7 @@ public class ExtensionConfiguration<C, E extends C> {
     private final Class<C> baseClass;
     private final Class<E> extensionInterface;
     private Set<Method> delegateMethods = new HashSet<>();
+    private Set<Method> defaultMethods = new HashSet<>();
 
     public ExtensionConfiguration(Class<C> baseClass, Class<E> extensionInterface) {
         this.baseClass = baseClass;
@@ -28,6 +29,8 @@ public class ExtensionConfiguration<C, E extends C> {
     private void categorizeMethod(Method method) {
         if (isInBaseClass(method)) {
             delegateMethods.add(method);
+        } else {
+            defaultMethods.add(method);
         }
     }
 
@@ -59,5 +62,9 @@ public class ExtensionConfiguration<C, E extends C> {
 
     public Set<Method> getDelegateMethods() {
         return delegateMethods;
+    }
+
+    public Set<Method> getDefaultMethods() {
+        return defaultMethods;
     }
 }
