@@ -1,0 +1,5 @@
+dependencies {
+    compile project(":jextend-core")
+
+    testCompile project(path: ":jextend-core", configuration: "testRuntime")
+}

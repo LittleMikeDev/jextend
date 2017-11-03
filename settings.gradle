@@ -1,2 +1,2 @@
-include 'jextend-core'
+include 'jextend-core', 'jextend-jdk'
 

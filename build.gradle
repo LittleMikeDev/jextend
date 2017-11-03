@@ -27,6 +27,14 @@ subprojects {
         testCompile 'org.mockito:mockito-core:2.10.0'
     }
 
+    task testJar(type: Jar) {
+        classifier "test"
+        from sourceSets.test.output
+    }
+    artifacts {
+        testRuntime testJar
+    }
+
     jacocoTestReport {
         reports {
             xml.enabled true
