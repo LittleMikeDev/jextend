@@ -4,9 +4,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import uk.co.littlemike.jextend.BaseJExtendTest;
+import uk.co.littlemike.jextend.Extension;
+import uk.co.littlemike.jextend.JExtend;
+import uk.co.littlemike.jextend.ListExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiFunction;
 
 public class ExtensionValidationTest extends BaseJExtendTest {
 
@@ -59,5 +63,12 @@ public class ExtensionValidationTest extends BaseJExtendTest {
     @Test
     public void doesNotThrowExceptionIfExtensionIsFullyImplemented() {
         getExtension(List.class, FullyImplemented.class);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test(expected = ExtensionInterfaceDoesNotExtendBaseClassException.class)
+    public void extensionInterfaceMustExtendBaseClass() {
+        BiFunction<Class, Class, Extension> extendFunction = JExtend::getExtension;
+        ((BiFunction) extendFunction).apply(ListExtension.class, List.class);
     }
 }

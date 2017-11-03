@@ -1,6 +1,7 @@
 package uk.co.littlemike.jextend.impl;
 
 import uk.co.littlemike.jextend.validation.ExtensionClassNotAnInterfaceException;
+import uk.co.littlemike.jextend.validation.ExtensionInterfaceDoesNotExtendBaseClassException;
 import uk.co.littlemike.jextend.validation.UnimplementedExtensionMethodException;
 
 import java.lang.reflect.Method;
@@ -40,6 +41,9 @@ public class ExtensionConfiguration<C, E extends C> {
     private void validate() {
         if (!extensionInterface.isInterface()) {
             throw new ExtensionClassNotAnInterfaceException(baseClass, extensionInterface);
+        }
+        if (!baseClass.isAssignableFrom(extensionInterface)) {
+            throw new ExtensionInterfaceDoesNotExtendBaseClassException(baseClass, extensionInterface);
         }
         if (!unimplementedMethods.isEmpty()) {
             throw new UnimplementedExtensionMethodException(baseClass, extensionInterface, unimplementedMethods);
