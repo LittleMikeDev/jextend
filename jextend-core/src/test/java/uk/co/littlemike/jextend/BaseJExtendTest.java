@@ -12,7 +12,7 @@ public class BaseJExtendTest {
 
     @Before
     public void useDefaultTestExtender() {
-        setExtender(new TestExtender());
+        setExtender(new StubExtender());
     }
 
     @After
@@ -20,7 +20,7 @@ public class BaseJExtendTest {
         setExtender(null);
     }
 
-    protected <C, E extends C> TestExtension<C, E> getExtension(Class<C> baseClass, Class<E> extensionInterface) {
-        return (TestExtension<C, E>) JExtend.getExtension(baseClass, extensionInterface);
+    protected <C, E extends C> StubExtension<C, E> getExtension(Class<C> baseClass, Class<E> extensionInterface) {
+        return (StubExtension<C, E>) JExtend.getExtension(baseClass, extensionInterface);
     }
 }

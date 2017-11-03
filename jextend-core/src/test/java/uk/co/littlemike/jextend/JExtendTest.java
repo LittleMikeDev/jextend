@@ -10,7 +10,7 @@ import static uk.co.littlemike.jextend.JExtend.setExtender;
 
 public class JExtendTest extends BaseJExtendTest {
 
-    private TestExtension<List, ListExtension> returnedExtension;
+    private StubExtension<List, ListExtension> returnedExtension;
 
     @Test
     public void returnsExtensionForBaseClassAndExtensionInterface() {

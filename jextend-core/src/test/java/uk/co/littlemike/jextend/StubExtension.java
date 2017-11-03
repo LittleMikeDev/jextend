@@ -7,12 +7,12 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Set;
 
-public class TestExtension<C, E extends C> implements Extension<C, E> {
+public class StubExtension<C, E extends C> implements Extension<C, E> {
     private static final InvocationHandler noOpInvocationHandler = (proxy, method, args) -> null;
 
     private final ExtensionConfiguration<C, E> configuration;
 
-    public TestExtension(ExtensionConfiguration<C, E> configuration) {
+    public StubExtension(ExtensionConfiguration<C, E> configuration) {
         this.configuration = configuration;
     }
 
@@ -20,7 +20,7 @@ public class TestExtension<C, E extends C> implements Extension<C, E> {
     @Override
     public E extend(C object) {
         return (E) Proxy.newProxyInstance(
-                TestExtension.class.getClassLoader(),
+                StubExtension.class.getClassLoader(),
                 new Class[] { configuration.getExtensionInterface() },
                 noOpInvocationHandler
         );
