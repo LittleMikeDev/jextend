@@ -1,12 +1,11 @@
-package uk.co.littlemike.jextend.validation;
+package uk.co.littlemike.jextend;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import uk.co.littlemike.jextend.BaseJExtendTest;
-import uk.co.littlemike.jextend.Extension;
-import uk.co.littlemike.jextend.JExtend;
-import uk.co.littlemike.jextend.ListExtension;
+import uk.co.littlemike.jextend.validation.ExtensionClassNotAnInterfaceException;
+import uk.co.littlemike.jextend.validation.ExtensionInterfaceDoesNotExtendBaseClassException;
+import uk.co.littlemike.jextend.validation.UnimplementedExtensionMethodException;
 
 import java.util.ArrayList;
 import java.util.List;
