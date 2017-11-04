@@ -8,6 +8,6 @@ public class JdkExtender implements Extender {
 
     @Override
     public <C, E extends C> Extension<C, E> getExtension(ExtensionConfiguration<C, E> configuration) {
-        return null;
+        return new JdkProxyExtension<>(configuration);
     }
 }
