@@ -3,14 +3,24 @@ package uk.co.littlemike.jextend.impl.jdk;
 import uk.co.littlemike.jextend.Extension;
 import uk.co.littlemike.jextend.impl.ExtensionConfiguration;
 
+import java.lang.invoke.MethodHandle;
+import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JdkProxyExtension<C, E extends C> implements Extension<C, E> {
 
     private final Class<E> extensionInterface;
+    private final Map<Method, MethodHandle> delegateMethodBindings = new HashMap<>();
 
     public JdkProxyExtension(ExtensionConfiguration<C, E> configuration) {
         extensionInterface = configuration.getExtensionInterface();
+
+        MethodLookup delegateLookup = new MethodLookup(configuration.getBaseClass());
+        configuration.getDelegateMethods().forEach(method ->
+                delegateMethodBindings.put(method, delegateLookup.lookup(method))
+        );
     }
 
     @SuppressWarnings("unchecked")
@@ -19,7 +29,7 @@ public class JdkProxyExtension<C, E extends C> implements Extension<C, E> {
         return (E) Proxy.newProxyInstance(
                 getClass().getClassLoader(),
                 new Class[] { extensionInterface },
-                new JdkInvocationHandler(object)
+                new JdkInvocationHandler(object, delegateMethodBindings)
         );
     }
 }
