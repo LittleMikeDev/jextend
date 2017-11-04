@@ -3,7 +3,9 @@ package uk.co.littlemike.jextend;
 import org.junit.After;
 import org.junit.Before;
 
-import static uk.co.littlemike.jextend.JExtend.setExtender;
+import static java.util.Collections.singleton;
+import static uk.co.littlemike.jextend.JExtend.resetServiceLoader;
+import static uk.co.littlemike.jextend.JExtend.setServiceLoader;
 
 /**
  * Ensures that a test extender implementation is set during test run
@@ -11,13 +13,13 @@ import static uk.co.littlemike.jextend.JExtend.setExtender;
 public class BaseJExtendTest {
 
     @Before
-    public void useDefaultTestExtender() {
-        setExtender(new StubExtender());
+    public void useDefaultStubExtender() {
+        setServiceLoader(clazz -> singleton(new StubExtender()));
     }
 
     @After
     public void autodetectExtender() {
-        setExtender(null);
+        resetServiceLoader();
     }
 
     protected <C, E extends C> StubExtension<C, E> getExtension(Class<C> baseClass, Class<E> extensionInterface) {

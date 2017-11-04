@@ -5,11 +5,13 @@ import org.junit.Test;
 
 import java.util.List;
 
+import static uk.co.littlemike.jextend.JExtend.resetServiceLoader;
+
 public abstract class BaseExtensionTest {
 
     @BeforeClass
     public static void unloadImplementation() {
-        JExtend.setExtender(null);
+        resetServiceLoader();
     }
 
     @Test

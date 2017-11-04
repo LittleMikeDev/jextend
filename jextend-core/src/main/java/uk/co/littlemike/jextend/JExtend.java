@@ -7,6 +7,7 @@ import uk.co.littlemike.jextend.impl.NoImplementationOnClasspathException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
+import java.util.function.Function;
 
 public class JExtend {
 
@@ -14,10 +15,21 @@ public class JExtend {
     }
 
     private static Extender extender;
+    private static Function<Class<Extender>, Iterable<Extender>> serviceLoader = ServiceLoader::load;
+
+    static {
+        resetServiceLoader();
+    }
 
     @VisibleForTesting
-    static void setExtender(Extender extender) {
-        JExtend.extender = extender;
+    static void resetServiceLoader() {
+        setServiceLoader(ServiceLoader::load);
+    }
+
+    @VisibleForTesting
+    static void setServiceLoader(Function<Class<Extender>, Iterable<Extender>> serviceLoader) {
+        extender = null;
+        JExtend.serviceLoader = serviceLoader;
     }
 
     public static <C, E extends C> Extension<C, E> getExtension(Class<C> baseClass, Class<E> extensionInterface) {
@@ -30,7 +42,7 @@ public class JExtend {
 
     private static void loadImplementation(Class<?> baseClass, Class<?> extensionInterface) {
         List<Extender> implementations = new ArrayList<>();
-        ServiceLoader.load(Extender.class).forEach(implementations::add);
+        serviceLoader.apply(Extender.class).forEach(implementations::add);
         if (implementations.isEmpty()) {
             throw new NoImplementationOnClasspathException(baseClass, extensionInterface);
         }

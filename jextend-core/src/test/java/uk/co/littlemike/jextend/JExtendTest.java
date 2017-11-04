@@ -6,7 +6,7 @@ import uk.co.littlemike.jextend.impl.NoImplementationOnClasspathException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.co.littlemike.jextend.JExtend.setExtender;
+import static uk.co.littlemike.jextend.JExtend.resetServiceLoader;
 
 public class JExtendTest extends BaseJExtendTest {
 
@@ -47,7 +47,7 @@ public class JExtendTest extends BaseJExtendTest {
 
     @Test(expected = NoImplementationOnClasspathException.class)
     public void throwsExceptionIfNoImplementationAvailableOnClasspath() {
-        setExtender(null);
+        resetServiceLoader();
 
         getExtension(List.class, ListExtension.class);
     }
