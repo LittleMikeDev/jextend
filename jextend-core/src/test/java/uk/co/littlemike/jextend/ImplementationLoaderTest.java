@@ -24,9 +24,10 @@ public class ImplementationLoaderTest {
     }
 
     @Test
-    public void usesImplementationWhenOneAvailableOnClasspath() {
+    public void usesImplementationRepeatedlyWhenOneAvailableOnClasspath() {
         setServiceLoader(c -> singleton(new StubExtender()));
 
+        getExtension(List.class, ListExtension.class);
         getExtension(List.class, ListExtension.class);
     }
 
