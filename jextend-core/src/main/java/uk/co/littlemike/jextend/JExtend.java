@@ -2,6 +2,7 @@ package uk.co.littlemike.jextend;
 
 import uk.co.littlemike.jextend.impl.Extender;
 import uk.co.littlemike.jextend.impl.ExtensionConfiguration;
+import uk.co.littlemike.jextend.impl.MultipleImplementationsOnClasspathException;
 import uk.co.littlemike.jextend.impl.NoImplementationOnClasspathException;
 
 import java.util.ArrayList;
@@ -45,6 +46,8 @@ public class JExtend {
         serviceLoader.apply(Extender.class).forEach(implementations::add);
         if (implementations.isEmpty()) {
             throw new NoImplementationOnClasspathException(baseClass, extensionInterface);
+        } else if (implementations.size() > 1) {
+            throw new MultipleImplementationsOnClasspathException(baseClass, extensionInterface, implementations);
         }
         extender = implementations.get(0);
     }

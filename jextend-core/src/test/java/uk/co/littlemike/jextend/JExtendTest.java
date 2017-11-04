@@ -1,12 +1,10 @@
 package uk.co.littlemike.jextend;
 
 import org.junit.Test;
-import uk.co.littlemike.jextend.impl.NoImplementationOnClasspathException;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.co.littlemike.jextend.JExtend.resetServiceLoader;
 
 public class JExtendTest extends BaseJExtendTest {
 
@@ -43,12 +41,5 @@ public class JExtendTest extends BaseJExtendTest {
         assertThat(returnedExtension.getDefaultMethods()).doesNotContain(
                 List.class.getMethod("isEmpty")
         );
-    }
-
-    @Test(expected = NoImplementationOnClasspathException.class)
-    public void throwsExceptionIfNoImplementationAvailableOnClasspath() {
-        resetServiceLoader();
-
-        getExtension(List.class, ListExtension.class);
     }
 }
