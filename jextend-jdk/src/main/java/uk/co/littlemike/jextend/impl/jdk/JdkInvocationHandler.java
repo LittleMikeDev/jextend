@@ -5,8 +5,14 @@ import java.lang.reflect.Method;
 
 public class JdkInvocationHandler implements InvocationHandler {
 
+    private final Object delegate;
+
+    public JdkInvocationHandler(Object delegate) {
+        this.delegate = delegate;
+    }
+
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        return null;
+        return method.invoke(delegate, args);
     }
 }

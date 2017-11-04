@@ -19,7 +19,7 @@ public class JdkProxyExtension<C, E extends C> implements Extension<C, E> {
         return (E) Proxy.newProxyInstance(
                 getClass().getClassLoader(),
                 new Class[] { extensionInterface },
-                new JdkInvocationHandler()
+                new JdkInvocationHandler(object)
         );
     }
 }
