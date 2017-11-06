@@ -5,7 +5,6 @@ import uk.co.littlemike.jextend.impl.ExtensionConfiguration;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,10 +25,6 @@ public class JdkProxyExtension<C, E extends C> implements Extension<C, E> {
     @SuppressWarnings("unchecked")
     @Override
     public E extend(C object) {
-        return (E) Proxy.newProxyInstance(
-                getClass().getClassLoader(),
-                new Class[] { extensionInterface },
-                new JdkInvocationHandler(object, delegateMethodBindings)
-        );
+        return new JdkInvocationHandler<>(object, extensionInterface, delegateMethodBindings).getProxy();
     }
 }
