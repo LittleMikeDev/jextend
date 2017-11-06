@@ -12,6 +12,7 @@ public class JdkProxyExtension<C, E extends C> implements Extension<C, E> {
 
     private final Class<E> extensionInterface;
     private final Map<Method, MethodHandle> delegateMethodBindings = new HashMap<>();
+    private final Map<Method, MethodHandle> defaultMethodBindings = new HashMap<>();
 
     public JdkProxyExtension(ExtensionConfiguration<C, E> configuration) {
         extensionInterface = configuration.getExtensionInterface();
@@ -20,11 +21,20 @@ public class JdkProxyExtension<C, E extends C> implements Extension<C, E> {
         configuration.getDelegateMethods().forEach(method ->
                 delegateMethodBindings.put(method, delegateLookup.lookup(method))
         );
+        PrivilegedMethodLookup privilegedLookup = new PrivilegedMethodLookup(configuration.getExtensionInterface());
+        configuration.getDefaultMethods().forEach(method ->
+                defaultMethodBindings.put(method, privilegedLookup.lookupDefault(method))
+        );
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public E extend(C object) {
-        return new JdkProxyBuilder<>(object, extensionInterface, delegateMethodBindings).getProxy();
+        return new JdkProxyBuilder<>(
+                object,
+                extensionInterface,
+                delegateMethodBindings,
+                defaultMethodBindings
+        ).getProxy();
     }
 }

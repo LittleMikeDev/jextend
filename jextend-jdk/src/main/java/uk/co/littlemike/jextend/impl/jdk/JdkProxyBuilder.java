@@ -12,7 +12,12 @@ public class JdkProxyBuilder<E> {
     private final Map<Method, MethodHandle> methodBindings = new HashMap<>();
 
     @SuppressWarnings("unchecked")
-    public JdkProxyBuilder(Object delegate, Class<E> extensionInterface, Map<Method, MethodHandle> delegateMethodBindings) {
+    public JdkProxyBuilder(
+            Object delegate,
+            Class<E> extensionInterface,
+            Map<Method, MethodHandle> delegateMethodBindings,
+            Map<Method, MethodHandle> defaultMethodBindings
+    ) {
         proxy = (E) Proxy.newProxyInstance(
                 getClass().getClassLoader(),
                 new Class[] { extensionInterface },
@@ -20,6 +25,7 @@ public class JdkProxyBuilder<E> {
         );
 
         delegateMethodBindings.forEach((method, handle) -> methodBindings.put(method, handle.bindTo(delegate)));
+        defaultMethodBindings.forEach((method, handle) -> methodBindings.put(method, handle.bindTo(proxy)));
     }
 
     private Object invoke(Method method, Object[] args) throws Throwable {

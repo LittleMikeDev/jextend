@@ -35,6 +35,19 @@ public abstract class BaseExtensionTest {
         assertThat(list).containsExactly("Direct", "Proxy");
         assertThat(extendedList).containsExactly("Direct", "Proxy");
     }
+    
+    interface TalkingList extends List {
+        default String greeting() {
+            return "Hello world!";
+        }
+    }
+
+    @Test
+    public void executesDefaultMethod() {
+        TalkingList talkingList = extendListWith(TalkingList.class);
+
+        assertThat(talkingList.greeting()).isEqualTo("Hello world!");
+    }
 
     private <E extends List> E extendListWith(Class<E> extensionInterface) {
         return JExtend.getExtension(List.class, extensionInterface).extend(list);
