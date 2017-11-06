@@ -16,7 +16,7 @@ public class MethodLookup {
         try {
             return lookup.unreflect(method);
         } catch (IllegalAccessException e) {
-            return null; // TODO handle this
+            throw new MethodLookupException(method, lookup.lookupClass(), e);
         }
     }
 }
