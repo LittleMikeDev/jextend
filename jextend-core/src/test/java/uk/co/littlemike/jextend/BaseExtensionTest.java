@@ -37,7 +37,6 @@ public abstract class BaseExtensionTest {
     }
 
     private <E extends List> E extendListWith(Class<E> extensionInterface) {
-        Extension<List, E> extension = JExtend.getExtension(List.class, extensionInterface);
-        return extension.extend(list);
+        return JExtend.getExtension(List.class, extensionInterface).extend(list);
     }
 }
