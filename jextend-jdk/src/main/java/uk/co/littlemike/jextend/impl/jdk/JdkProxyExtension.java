@@ -25,6 +25,6 @@ public class JdkProxyExtension<C, E extends C> implements Extension<C, E> {
     @SuppressWarnings("unchecked")
     @Override
     public E extend(C object) {
-        return new JdkInvocationHandler<>(object, extensionInterface, delegateMethodBindings).getProxy();
+        return new JdkProxyBuilder<>(object, extensionInterface, delegateMethodBindings).getProxy();
     }
 }
