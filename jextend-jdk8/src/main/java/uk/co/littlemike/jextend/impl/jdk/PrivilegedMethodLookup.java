@@ -26,6 +26,14 @@ public class PrivilegedMethodLookup {
         return privilegedLookup;
     }
 
+    public MethodHandle lookup(Method method) {
+        try {
+            return lookup.unreflect(method);
+        } catch (IllegalAccessException e) {
+            throw new MethodLookupException(method, lookup.lookupClass(), e);
+        }
+    }
+
     public MethodHandle lookupDefault(Method method) {
         try {
             return lookup.unreflectSpecial(method, lookup.lookupClass());

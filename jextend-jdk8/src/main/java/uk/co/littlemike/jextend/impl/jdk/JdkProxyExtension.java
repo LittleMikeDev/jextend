@@ -17,11 +17,10 @@ public class JdkProxyExtension<C, E extends C> implements Extension<C, E> {
     public JdkProxyExtension(ExtensionConfiguration<C, E> configuration) {
         extensionInterface = configuration.getExtensionInterface();
 
-        MethodLookup delegateLookup = new MethodLookup(configuration.getBaseClass());
-        configuration.getDelegateMethods().forEach(method ->
-                delegateMethodBindings.put(method, delegateLookup.lookup(method))
-        );
         PrivilegedMethodLookup privilegedLookup = new PrivilegedMethodLookup(configuration.getExtensionInterface());
+        configuration.getDelegateMethods().forEach(method ->
+                delegateMethodBindings.put(method, privilegedLookup.lookup(method))
+        );
         configuration.getDefaultMethods().forEach(method ->
                 defaultMethodBindings.put(method, privilegedLookup.lookupDefault(method))
         );

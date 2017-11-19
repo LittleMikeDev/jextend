@@ -87,6 +87,20 @@ public abstract class BaseExtensionTest {
         assertThat(extension.sayName()).isEqualTo("I am Base"); // NOTE!
     }
 
+    private interface PrivateInterface {
+        default void aMethod() {}
+    }
+
+    private interface PrivateExtension extends PrivateInterface {
+    }
+
+    @Test
+    public void canExtendPrivateInterfacesWithoutException() {
+        PrivateInterface base = new PrivateInterface() {};
+
+        JExtend.getExtension(PrivateInterface.class, PrivateExtension.class).extend(base);
+    }
+
     private <E extends List> E extendListWith(Class<E> extensionInterface) {
         return JExtend.getExtension(List.class, extensionInterface).extend(list);
     }
