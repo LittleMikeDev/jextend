@@ -1,7 +1,7 @@
 <component name="InspectionProjectProfileManager">
   <profile version="1.0">
     <option name="myName" value="Project Default" />
-    <inspection_tool class="WeakerAccess" enabled="true" level="UNUSED ENTRY" enabled_by_default="true">
+    <inspection_tool class="WeakerAccess" enabled="true" level="INFORMATION" enabled_by_default="true">
       <scope name="Production" level="WARNING" enabled="true">
         <option name="SUGGEST_PACKAGE_LOCAL_FOR_MEMBERS" value="false" />
         <option name="SUGGEST_PACKAGE_LOCAL_FOR_TOP_CLASSES" value="false" />
